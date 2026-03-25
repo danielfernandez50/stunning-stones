@@ -414,14 +414,15 @@
     }
     .suppliers-track-wrapper {
       position: relative;
+      overflow: hidden;
     }
-    /* Fade edges to hint there's more to scroll */
+    /* Fade edges */
     .suppliers-track-wrapper::before,
     .suppliers-track-wrapper::after {
       content: '';
       position: absolute;
       top: 0; bottom: 0;
-      width: 60px;
+      width: 80px;
       z-index: 2;
       pointer-events: none;
     }
@@ -435,19 +436,19 @@
     }
     .suppliers-track {
       display: flex;
-      gap: 24px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding: 8px 24px 24px;
-      scrollbar-width: none;
-      cursor: grab;
+      width: max-content;
+      animation: marquee 40s linear infinite;
     }
-    .suppliers-track:active { cursor: grabbing; }
-    .suppliers-track::-webkit-scrollbar { display: none; }
+    .suppliers-track-wrapper:hover .suppliers-track {
+      animation-play-state: paused;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
     .supplier-card {
       flex: 0 0 320px;
-      scroll-snap-align: start;
+      margin: 8px 12px;
       background: #fafaf8;
       border-radius: 4px;
       padding: 32px 28px;
@@ -455,12 +456,6 @@
       transition: transform 0.3s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
-    }
-    .supplier-card:first-child { margin-left: calc((100vw - 1200px) / 2); }
-    .supplier-card:last-child { margin-right: calc((100vw - 1200px) / 2); }
-    @media (max-width: 1248px) {
-      .supplier-card:first-child { margin-left: 24px; }
-      .supplier-card:last-child { margin-right: 24px; }
     }
     .supplier-card:hover {
       transform: translateY(-4px);
@@ -516,15 +511,6 @@
     }
     .supplier-link:hover { color: #9a7c48; gap: 12px; }
     .supplier-link svg { width: 14px; height: 14px; }
-    .suppliers-hint {
-      text-align: center;
-      margin-top: 24px;
-      font-size: 0.75rem;
-      color: #bbb;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
     /* ========== PROCESS ========== */
     .process { padding: 100px 0; }
     .process-header { text-align: center; margin-bottom: 64px; }
@@ -1069,9 +1055,96 @@
           </a>
         </div>
 
+        <!-- Duplicated set for seamless loop -->
+        <div class="supplier-card" aria-hidden="true">
+          <div class="supplier-name">Technistone</div>
+          <div class="supplier-type">Quartz Manufacturer</div>
+          <p>Leading European manufacturer of engineered quartz surfaces with sophisticated designs that replicate natural marble.</p>
+          <div class="supplier-tags">
+            <span class="supplier-tag">Quartz</span>
+            <span class="supplier-tag">Engineered Stone</span>
+          </div>
+          <a href="https://www.technistone.com/usa/color-range/" target="_blank" rel="noopener" class="supplier-link" tabindex="-1">
+            Browse Colors <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="supplier-card" aria-hidden="true">
+          <div class="supplier-name">ST Stones</div>
+          <div class="supplier-type">Full-Line Distributor</div>
+          <p>Comprehensive stone distributor offering quartz, natural stone, and porcelain. One of our go-to sources for variety.</p>
+          <div class="supplier-tags">
+            <span class="supplier-tag">Quartz</span>
+            <span class="supplier-tag">Granite</span>
+            <span class="supplier-tag">Marble</span>
+            <span class="supplier-tag">Porcelain</span>
+          </div>
+          <a href="https://ststones.com/products/" target="_blank" rel="noopener" class="supplier-link" tabindex="-1">
+            View Products <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="supplier-card" aria-hidden="true">
+          <div class="supplier-name">Cambria</div>
+          <div class="supplier-type">American Quartz</div>
+          <p>America's leading producer of natural quartz surfaces. Family-owned, Made in the USA, with an extensive design palette.</p>
+          <div class="supplier-tags">
+            <span class="supplier-tag">Quartz</span>
+            <span class="supplier-tag">Made in USA</span>
+            <span class="supplier-tag">Premium</span>
+          </div>
+          <a href="https://www.cambriausa.com/quartz-countertops/quartz-colors" target="_blank" rel="noopener" class="supplier-link" tabindex="-1">
+            Explore Designs <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="supplier-card" aria-hidden="true">
+          <div class="supplier-name">Cosentino</div>
+          <div class="supplier-type">Global Stone Leader</div>
+          <p>Home to Silestone, Dekton, and Sensa brands. Cutting-edge quartz, ultracompact surfaces, and treated natural stone.</p>
+          <div class="supplier-tags">
+            <span class="supplier-tag">Silestone</span>
+            <span class="supplier-tag">Dekton</span>
+            <span class="supplier-tag">Granite</span>
+            <span class="supplier-tag">Marble</span>
+          </div>
+          <a href="https://www.cosentino.com/colors/" target="_blank" rel="noopener" class="supplier-link" tabindex="-1">
+            Browse Colors <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="supplier-card" aria-hidden="true">
+          <div class="supplier-name">UMI Stone</div>
+          <div class="supplier-type">Local Orlando Supplier</div>
+          <p>Trusted local supplier based in Orlando with a live inventory of marble, granite, and quartzite you can view in person.</p>
+          <div class="supplier-tags">
+            <span class="supplier-tag">Granite</span>
+            <span class="supplier-tag">Quartzite</span>
+            <span class="supplier-tag">Marble</span>
+            <span class="supplier-tag">Local</span>
+          </div>
+          <a href="https://umistone.com/live-inventory/orlando/" target="_blank" rel="noopener" class="supplier-link" tabindex="-1">
+            Live Inventory <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="supplier-card" aria-hidden="true">
+          <div class="supplier-name">Maia Stone</div>
+          <div class="supplier-type">Quartz &amp; Natural Stone</div>
+          <p>Quality supplier offering both quartz and natural stone collections. Known for curated selection and competitive pricing.</p>
+          <div class="supplier-tags">
+            <span class="supplier-tag">Quartz</span>
+            <span class="supplier-tag">Granite</span>
+            <span class="supplier-tag">Quartzite</span>
+            <span class="supplier-tag">Marble</span>
+          </div>
+          <a href="https://www.maiastonecompany.com/collection/quartz" target="_blank" rel="noopener" class="supplier-link" tabindex="-1">
+            View Collection <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
       </div>
     </div>
-    <p class="suppliers-hint">Swipe to explore &rarr;</p>
   </section>
 
   <!-- PROCESS -->
@@ -1323,23 +1396,10 @@
       observer.observe(el);
     });
 
-    // Suppliers drag-to-scroll
-    const track = document.getElementById('suppliersTrack');
-    if (track) {
-      let isDown = false, startX, scrollLeft;
-      track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-      });
-      track.addEventListener('mouseleave', () => { isDown = false; });
-      track.addEventListener('mouseup', () => { isDown = false; });
-      track.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        track.scrollLeft = scrollLeft - (x - startX) * 1.5;
-      });
+    // Suppliers: respect prefers-reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const track = document.getElementById('suppliersTrack');
+      if (track) track.style.animationPlayState = 'paused';
     }
   </script>
 
