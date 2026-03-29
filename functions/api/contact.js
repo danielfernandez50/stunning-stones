@@ -6,14 +6,16 @@ export async function onRequestPost(context) {
   };
 
   try {
-    const { name, email, phone, service, message, turnstileToken } = await context.request.json();
+    const { firstName, lastName, email, phone, service, message, turnstileToken } = await context.request.json();
 
-    if (!name || !email) {
+    if (!firstName || !lastName || !email) {
       return new Response(
-        JSON.stringify({ error: "Name and email are required." }),
+        JSON.stringify({ error: "First name, last name, and email are required." }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
+
+    const name = `${firstName} ${lastName}`;
 
     // Verify Cloudflare Turnstile token
     const TURNSTILE_SECRET = context.env.TURNSTILE_SECRET_KEY;

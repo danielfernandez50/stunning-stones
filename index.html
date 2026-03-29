@@ -1491,13 +1491,15 @@
   <div class="modal-overlay" id="estimateModal">
     <div class="modal">
       <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <img src="images/logo-dark-cropped.png" alt="Stunning Stones" style="height: 50px; width: auto; display: block; margin: 0 auto 16px;">
       <h2>Request a Free Estimate</h2>
       <p class="modal-sub">Tell us about your project and we'll get back to you within 24 hours.</p>
       <form class="modal-form" id="estimateForm" onsubmit="handleEstimate(event)">
         <div class="form-row">
-          <input type="text" name="name" placeholder="Your Name" required aria-label="Your name">
-          <input type="email" name="email" placeholder="Your Email" required aria-label="Your email">
+          <input type="text" name="firstName" placeholder="First Name" required aria-label="First name">
+          <input type="text" name="lastName" placeholder="Last Name" required aria-label="Last name">
         </div>
+        <input type="email" name="email" placeholder="Your Email" required aria-label="Your email">
         <input type="tel" name="phone" placeholder="Phone Number" aria-label="Phone number">
         <select name="service" aria-label="Service needed">
           <option value="" disabled selected>Select a Service</option>
@@ -1559,7 +1561,8 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: data.get('name'),
+            firstName: data.get('firstName'),
+            lastName: data.get('lastName'),
             email: data.get('email'),
             phone: data.get('phone') || '',
             service: data.get('service') || '',
