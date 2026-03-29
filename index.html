@@ -576,9 +576,23 @@
     /* ========== CONTACT ========== */
     .contact { padding: 100px 0; background: #fafaf8; }
     .contact-grid {
-      max-width: 680px;
-      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
     }
+    .contact-info h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+    .contact-info h3:first-child { margin-top: 0; }
+    .contact-info p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+    .contact-info a { color: #b8965a; font-weight: 500; }
+    .contact-info a:hover { text-decoration: underline; }
     .contact-form { display: flex; flex-direction: column; gap: 16px; }
     .contact-form input,
     .contact-form textarea,
@@ -687,7 +701,7 @@
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 900px) {
-      .about-grid {
+      .about-grid, .contact-grid {
         grid-template-columns: 1fr;
         gap: 48px;
       }
@@ -1218,6 +1232,22 @@
             <button type="submit" class="btn btn-dark" id="submitBtn">Request Free Estimate</button>
             <div id="formStatus" style="display:none; margin-top: 16px; padding: 14px 20px; border-radius: 8px; font-size: 0.95rem;"></div>
           </form>
+        </div>
+        <div class="contact-info">
+          <h3>Email</h3>
+          <p><a href="mailto:info@stunning-stones.net">info@stunning-stones.net</a></p>
+
+          <h3>Address</h3>
+          <p>5960 Jones Ave<br>Zellwood, FL</p>
+
+          <h3>Service Area</h3>
+          <p>Central Florida<br>Orlando, Kissimmee, Sanford, Lake Mary, Winter Park, Clermont, Daytona Beach, and surrounding areas</p>
+
+          <h3>Hours</h3>
+          <p>Monday &ndash; Friday: 8:00 AM &ndash; 5:00 PM<br>Saturday: By appointment<br>Sunday: Closed</p>
+
+          <h3>Follow Us</h3>
+          <p><a href="https://www.stunning-stones.net" target="_blank" rel="noopener">stunning-stones.net</a></p>
         </div>
       </div>
     </div>
