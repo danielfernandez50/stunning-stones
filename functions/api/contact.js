@@ -18,7 +18,7 @@ export async function onRequestPost(context) {
     const RESEND_API_KEY = context.env.RESEND_API_KEY;
     if (!RESEND_API_KEY) {
       return new Response(
-        JSON.stringify({ error: "Email service not configured." }),
+        JSON.stringify({ error: "RESEND_API_KEY not set. Add it in Cloudflare Pages environment variables." }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
@@ -72,9 +72,9 @@ export async function onRequestPost(context) {
     });
 
     if (!res.ok) {
-      console.error("Resend error:", await res.text());
+      const resendErr = await res.text();
       return new Response(
-        JSON.stringify({ error: "Failed to send. Please try again." }),
+        JSON.stringify({ error: "Resend error: " + resendErr }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
