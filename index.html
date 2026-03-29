@@ -806,12 +806,15 @@
       .about-image img { height: 350px; }
     }
     @media (max-width: 768px) {
+      header .header-inner { height: 64px; padding: 0 16px; }
+      .logo { height: 64px; }
+      .logo img { height: 44px; }
       nav ul { display: none; }
       nav ul.open {
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 80px;
+        top: 64px;
         left: 0;
         right: 0;
         background: #fff;
@@ -820,13 +823,16 @@
         gap: 16px;
       }
       nav ul.open a { color: #2c2c2c; }
-      .menu-toggle { display: flex; }
+      .menu-toggle { display: flex; order: 1; }
+      .hero-logo { width: 220px; margin-bottom: 20px; }
       .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; margin-bottom: 24px; }
       .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
       .contact-info-row { grid-template-columns: 1fr; }
       .stats { grid-template-columns: 1fr 1fr; gap: 24px; }
     }
     @media (max-width: 480px) {
+      .hero-logo { width: 180px; }
       .hero-buttons { flex-direction: column; }
       .hero-buttons .btn { text-align: center; }
     }
