@@ -137,12 +137,12 @@
     .logo img {
       height: 60px;
       width: auto;
-      transition: opacity 0.3s;
+      transition: opacity 0.4s ease;
     }
-    .logo .logo-light { display: block; }
-    .logo .logo-dark { display: none; }
+    .logo .logo-light { display: block; opacity: 0; }
+    .logo .logo-dark { display: none; opacity: 0; }
     header.scrolled .logo .logo-light { display: none; }
-    header.scrolled .logo .logo-dark { display: block; }
+    header.scrolled .logo .logo-dark { display: block; opacity: 1; }
     nav ul { display: flex; gap: 32px; }
     nav a {
       font-size: 0.85rem;
@@ -214,6 +214,11 @@
       height: auto;
       margin-bottom: 24px;
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .hero-logo.faded {
+      opacity: 0;
+      transform: translateY(-10px);
     }
     .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
 
@@ -1258,7 +1263,10 @@
     // Header scroll effect
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 50);
+      const isScrolled = window.scrollY > 50;
+      header.classList.toggle('scrolled', isScrolled);
+      const heroLogo = document.querySelector('.hero-logo');
+      if (heroLogo) heroLogo.classList.toggle('faded', isScrolled);
     });
 
     // Close mobile menu on link click
