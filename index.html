@@ -130,15 +130,19 @@
       height: 80px;
     }
     .logo {
-      font-size: 1.4rem;
-      font-weight: 300;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #fff;
-      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      height: 80px;
     }
-    .logo strong { font-weight: 700; }
-    header.scrolled .logo { color: #1a1a1a; }
+    .logo img {
+      height: 50px;
+      width: auto;
+      transition: opacity 0.3s;
+    }
+    .logo .logo-light { display: block; }
+    .logo .logo-dark { display: none; }
+    header.scrolled .logo .logo-light { display: none; }
+    header.scrolled .logo .logo-dark { display: block; }
     nav ul { display: flex; gap: 32px; }
     nav a {
       font-size: 0.85rem;
@@ -204,6 +208,12 @@
       margin-bottom: 36px;
       max-width: 500px;
       line-height: 1.7;
+    }
+    .hero-logo {
+      width: 220px;
+      height: auto;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
     }
     .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
 
@@ -619,7 +629,7 @@
       gap: 32px;
       margin-bottom: 32px;
     }
-    .footer-brand .logo { color: #fff; font-size: 1.2rem; margin-bottom: 12px; }
+    .footer-logo { height: 45px; width: auto; margin-bottom: 16px; }
     .footer-brand p { font-size: 0.85rem; max-width: 300px; }
     .footer-links h4 {
       color: #fff;
@@ -730,7 +740,10 @@
   <!-- HEADER -->
   <header id="header">
     <div class="header-inner">
-      <a href="#" class="logo"><strong>Stunning</strong> Stones</a>
+      <a href="#" class="logo">
+        <img src="images/logo-negativo.png" alt="Stunning Stones" class="logo-light">
+        <img src="images/logo-positivo.png" alt="Stunning Stones" class="logo-dark">
+      </a>
       <button class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('open')" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -752,6 +765,7 @@
     <div class="hero-bg" role="img" aria-label="Beautiful calacatta marble kitchen countertop with gold veining in Central Florida home"></div>
     <div class="hero-overlay"></div>
     <div class="container hero-content">
+      <img src="images/logo-negativo.png" alt="Stunning Stones Logo" class="hero-logo">
       <p class="section-label">Central Florida's Stone Experts</p>
       <h1>Crafting <strong>Stunning</strong> Stone Surfaces for Your Home</h1>
       <p>A new company with years of experience. Expert fabrication and installation of marble, quartz, and granite countertops across Central Florida.</p>
@@ -1243,7 +1257,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <div class="logo"><strong>Stunning</strong> Stones</div>
+          <img src="images/logo-negativo.png" alt="Stunning Stones" class="footer-logo">
           <p>New company, seasoned hands. Expert stone fabrication and installation serving Central Florida.</p>
         </div>
         <div class="footer-links">
