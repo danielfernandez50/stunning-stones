@@ -603,6 +603,110 @@
     .contact-info-item a { color: #b8965a; font-weight: 500; }
     .contact-info-item a:hover { text-decoration: underline; }
 
+    /* ========== ESTIMATE MODAL ========== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 40px;
+      position: relative;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #999;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s, color 0.2s;
+    }
+    .modal-close:hover { background: #f5f5f5; color: #333; }
+    .modal h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+    .modal .modal-sub {
+      color: #777;
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+    }
+    .modal-form { display: flex; flex-direction: column; gap: 14px; }
+    .modal-form input,
+    .modal-form textarea,
+    .modal-form select {
+      padding: 14px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fafaf8;
+      transition: border-color 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .modal-form input:focus,
+    .modal-form textarea:focus,
+    .modal-form select:focus {
+      outline: none;
+      border-color: #b8965a;
+      background: #fff;
+    }
+    .modal-form textarea { resize: vertical; min-height: 100px; }
+    .modal-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal-form .btn-submit {
+      padding: 16px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 4px;
+    }
+    .modal-form .btn-submit:hover { background: #333; }
+    .modal-form .btn-submit:disabled { background: #999; cursor: not-allowed; }
+    #modalStatus {
+      display: none;
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 580px) {
+      .modal { padding: 28px 20px; }
+      .modal-form .form-row { grid-template-columns: 1fr; }
+    }
+
     /* ========== FOOTER ========== */
     footer {
       background: #111;
@@ -762,7 +866,7 @@
       <h1>Crafting <strong>Stunning</strong> Stone Surfaces for Your Home</h1>
       <p>A new company with years of experience. Expert fabrication and installation of marble, quartz, and granite countertops across Central Florida.</p>
       <div class="hero-buttons">
-        <a href="mailto:info@stunning-stones.net?subject=Free%20Estimate%20Request" class="btn btn-primary">Get a Free Estimate</a>
+        <a href="#" class="btn btn-primary" onclick="openModal(); return false;">Get a Free Estimate</a>
         <a href="#gallery" class="btn btn-outline">View Our Work</a>
       </div>
     </div>
@@ -1195,7 +1299,7 @@
     <div class="container">
       <h2>Ready to Transform <strong>Your Space?</strong></h2>
       <p>Get a free estimate for your countertop project today.</p>
-      <a href="mailto:info@stunning-stones.net?subject=Free%20Estimate%20Request" class="btn btn-primary">Request a Free Estimate</a>
+      <a href="#" class="btn btn-primary" onclick="openModal(); return false;">Request a Free Estimate</a>
     </div>
   </section>
 
@@ -1207,7 +1311,7 @@
       <div class="contact-info-row">
         <div class="contact-info-item">
           <h3>Email</h3>
-          <p><a href="mailto:info@stunning-stones.net">info@stunning-stones.net</a></p>
+          <p><a href="#" onclick="openModal(); return false;">info@stunning-stones.net</a></p>
         </div>
         <div class="contact-info-item">
           <h3>Address</h3>
@@ -1379,6 +1483,100 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const track = document.getElementById('suppliersTrack');
       if (track) track.style.animationPlayState = 'paused';
+    }
+  </script>
+
+  <!-- ESTIMATE MODAL -->
+  <div class="modal-overlay" id="estimateModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <h2>Request a Free Estimate</h2>
+      <p class="modal-sub">Tell us about your project and we'll get back to you within 24 hours.</p>
+      <form class="modal-form" id="estimateForm" onsubmit="handleEstimate(event)">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your Name" required aria-label="Your name">
+          <input type="email" name="email" placeholder="Your Email" required aria-label="Your email">
+        </div>
+        <input type="tel" name="phone" placeholder="Phone Number" aria-label="Phone number">
+        <select name="service" aria-label="Service needed">
+          <option value="" disabled selected>Select a Service</option>
+          <option value="Kitchen Countertops">Kitchen Countertops</option>
+          <option value="Bathroom Vanities">Bathroom Vanities</option>
+          <option value="Waterfall Island">Waterfall Island</option>
+          <option value="Backsplash">Backsplash</option>
+          <option value="Other">Other</option>
+        </select>
+        <textarea name="message" placeholder="Tell us about your project..." aria-label="Project details"></textarea>
+        <button type="submit" class="btn-submit" id="estimateBtn">Send Request</button>
+        <div id="modalStatus"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Modal open/close
+    function openModal() {
+      document.getElementById('estimateModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('estimateModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('estimateModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Estimate form submit via Resend
+    async function handleEstimate(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById('estimateBtn');
+      const status = document.getElementById('modalStatus');
+      const data = new FormData(form);
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: data.get('name'),
+            email: data.get('email'),
+            phone: data.get('phone') || '',
+            service: data.get('service') || '',
+            message: data.get('message') || ''
+          })
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          status.style.display = 'block';
+          status.style.background = '#f0fdf4';
+          status.style.color = '#166534';
+          status.style.border = '1px solid #bbf7d0';
+          status.textContent = 'Thank you! We\'ll get back to you shortly.';
+          form.reset();
+          setTimeout(closeModal, 2500);
+        } else {
+          throw new Error(result.error || 'Failed to send');
+        }
+      } catch (err) {
+        status.style.display = 'block';
+        status.style.background = '#fef2f2';
+        status.style.color = '#991b1b';
+        status.style.border = '1px solid #fecaca';
+        status.textContent = 'Error sending request. Please email info@stunning-stones.net directly.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Request';
+      }
     }
   </script>
 
