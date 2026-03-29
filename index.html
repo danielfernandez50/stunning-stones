@@ -830,6 +830,7 @@
       .hero-buttons .btn { text-align: center; }
     }
   </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -1507,6 +1508,7 @@
           <option value="Other">Other</option>
         </select>
         <textarea name="message" placeholder="Tell us about your project..." aria-label="Project details"></textarea>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACxsvMX0mccAnoCc" data-theme="light"></div>
         <button type="submit" class="btn-submit" id="estimateBtn">Send Request</button>
         <div id="modalStatus"></div>
       </form>
@@ -1530,13 +1532,23 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    // Estimate form submit via Resend
+    // Estimate form submit via Resend + Turnstile
     async function handleEstimate(e) {
       e.preventDefault();
       const form = e.target;
       const btn = document.getElementById('estimateBtn');
       const status = document.getElementById('modalStatus');
       const data = new FormData(form);
+      const turnstileToken = data.get('cf-turnstile-response');
+
+      if (!turnstileToken) {
+        status.style.display = 'block';
+        status.style.background = '#fef2f2';
+        status.style.color = '#991b1b';
+        status.style.border = '1px solid #fecaca';
+        status.textContent = 'Please complete the verification check.';
+        return;
+      }
 
       btn.disabled = true;
       btn.textContent = 'Sending...';
@@ -1551,7 +1563,8 @@
             email: data.get('email'),
             phone: data.get('phone') || '',
             service: data.get('service') || '',
-            message: data.get('message') || ''
+            message: data.get('message') || '',
+            turnstileToken: turnstileToken
           })
         });
 
@@ -1563,6 +1576,7 @@
           status.style.border = '1px solid #bbf7d0';
           status.textContent = 'Thank you! We\'ll get back to you shortly.';
           form.reset();
+          if (window.turnstile) turnstile.reset();
           setTimeout(closeModal, 2500);
         } else {
           throw new Error(result.error || 'Failed to send');
@@ -1573,6 +1587,7 @@
         status.style.color = '#991b1b';
         status.style.border = '1px solid #fecaca';
         status.textContent = 'Error sending request. Please email info@stunning-stones.net directly.';
+        if (window.turnstile) turnstile.reset();
       } finally {
         btn.disabled = false;
         btn.textContent = 'Send Request';

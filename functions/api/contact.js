@@ -6,11 +6,36 @@ export async function onRequestPost(context) {
   };
 
   try {
-    const { name, email, phone, service, message } = await context.request.json();
+    const { name, email, phone, service, message, turnstileToken } = await context.request.json();
 
     if (!name || !email) {
       return new Response(
         JSON.stringify({ error: "Name and email are required." }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Verify Cloudflare Turnstile token
+    const TURNSTILE_SECRET = context.env.TURNSTILE_SECRET_KEY;
+    if (TURNSTILE_SECRET && turnstileToken) {
+      const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret: TURNSTILE_SECRET,
+          response: turnstileToken,
+        }),
+      });
+      const turnstileData = await turnstileRes.json();
+      if (!turnstileData.success) {
+        return new Response(
+          JSON.stringify({ error: "Human verification failed. Please try again." }),
+          { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } }
+        );
+      }
+    } else if (TURNSTILE_SECRET && !turnstileToken) {
+      return new Response(
+        JSON.stringify({ error: "Please complete the verification check." }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
@@ -72,9 +97,9 @@ export async function onRequestPost(context) {
     });
 
     if (!res.ok) {
-      const resendErr = await res.text();
+      console.error("Resend API error:", await res.text());
       return new Response(
-        JSON.stringify({ error: "Resend error: " + resendErr }),
+        JSON.stringify({ error: "Something went wrong sending your request. Please try again." }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
