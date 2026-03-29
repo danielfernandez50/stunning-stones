@@ -575,45 +575,24 @@
 
     /* ========== CONTACT ========== */
     .contact { padding: 100px 0; background: #fafaf8; }
-    .contact-grid {
+    .contact-info-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-top: 48px;
     }
-    .contact-info h3 {
+    .contact-info-item h3 {
       font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 8px;
-      margin-top: 28px;
+      margin-bottom: 10px;
     }
-    .contact-info h3:first-child { margin-top: 0; }
-    .contact-info p {
+    .contact-info-item p {
       color: #666;
       font-size: 0.95rem;
+      line-height: 1.6;
     }
-    .contact-info a { color: #b8965a; font-weight: 500; }
-    .contact-info a:hover { text-decoration: underline; }
-    .contact-form { display: flex; flex-direction: column; gap: 16px; }
-    .contact-form input,
-    .contact-form textarea,
-    .contact-form select {
-      padding: 14px 18px;
-      border: 1px solid #ddd;
-      border-radius: 2px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      background: #fff;
-      transition: border-color 0.3s;
-      width: 100%;
-    }
-    .contact-form input:focus,
-    .contact-form textarea:focus,
-    .contact-form select:focus {
-      outline: none;
-      border-color: #b8965a;
-    }
-    .contact-form textarea { resize: vertical; min-height: 120px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .contact-info-item a { color: #b8965a; font-weight: 500; }
+    .contact-info-item a:hover { text-decoration: underline; }
 
     /* ========== FOOTER ========== */
     footer {
@@ -701,9 +680,13 @@
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 900px) {
-      .about-grid, .contact-grid {
+      .about-grid {
         grid-template-columns: 1fr;
         gap: 48px;
+      }
+      .contact-info-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
       }
       .about-image { order: -1; }
       .about-image img { height: 350px; }
@@ -726,7 +709,7 @@
       .menu-toggle { display: flex; }
       .hero h1 { font-size: 2rem; }
       .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-      .form-row { grid-template-columns: 1fr; }
+      .contact-info-row { grid-template-columns: 1fr; }
       .stats { grid-template-columns: 1fr 1fr; gap: 24px; }
     }
     @media (max-width: 480px) {
@@ -770,7 +753,7 @@
       <h1>Crafting <strong>Stunning</strong> Stone Surfaces for Your Home</h1>
       <p>A new company with years of experience. Expert fabrication and installation of marble, quartz, and granite countertops across Central Florida.</p>
       <div class="hero-buttons">
-        <a href="#contact" class="btn btn-primary">Get a Free Estimate</a>
+        <a href="mailto:info@stunning-stones.net?subject=Free%20Estimate%20Request" class="btn btn-primary">Get a Free Estimate</a>
         <a href="#gallery" class="btn btn-outline">View Our Work</a>
       </div>
     </div>
@@ -1203,51 +1186,31 @@
     <div class="container">
       <h2>Ready to Transform <strong>Your Space?</strong></h2>
       <p>Get a free estimate for your countertop project today.</p>
-      <a href="#contact" class="btn btn-primary">Request a Free Estimate</a>
+      <a href="mailto:info@stunning-stones.net?subject=Free%20Estimate%20Request" class="btn btn-primary">Request a Free Estimate</a>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="container">
-      <div class="contact-grid">
-        <div>
-          <p class="section-label">Get In Touch</p>
-          <h2 class="section-title">Request a <strong>Free Estimate</strong></h2>
-          <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
-            <div class="form-row">
-              <input type="text" name="name" placeholder="Your Name" required aria-label="Your name">
-              <input type="email" name="email" placeholder="Your Email" required aria-label="Your email">
-            </div>
-            <input type="tel" name="phone" placeholder="Phone Number" aria-label="Phone number">
-            <select name="service" aria-label="Service needed">
-              <option value="" disabled selected>Select a Service</option>
-              <option value="Kitchen Countertops">Kitchen Countertops</option>
-              <option value="Bathroom Vanities">Bathroom Vanities</option>
-              <option value="Waterfall Island">Waterfall Island</option>
-              <option value="Backsplash">Backsplash</option>
-              <option value="Other">Other</option>
-            </select>
-            <textarea name="message" placeholder="Tell us about your project..." aria-label="Project details"></textarea>
-            <button type="submit" class="btn btn-dark" id="submitBtn">Request Free Estimate</button>
-            <div id="formStatus" style="display:none; margin-top: 16px; padding: 14px 20px; border-radius: 8px; font-size: 0.95rem;"></div>
-          </form>
-        </div>
-        <div class="contact-info">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Contact <strong>Us</strong></h2>
+      <div class="contact-info-row">
+        <div class="contact-info-item">
           <h3>Email</h3>
           <p><a href="mailto:info@stunning-stones.net">info@stunning-stones.net</a></p>
-
+        </div>
+        <div class="contact-info-item">
           <h3>Address</h3>
           <p>5960 Jones Ave<br>Zellwood, FL</p>
-
+        </div>
+        <div class="contact-info-item">
           <h3>Service Area</h3>
           <p>Central Florida<br>Orlando, Kissimmee, Sanford, Lake Mary, Winter Park, Clermont, Daytona Beach, and surrounding areas</p>
-
+        </div>
+        <div class="contact-info-item">
           <h3>Hours</h3>
           <p>Monday &ndash; Friday: 8:00 AM &ndash; 5:00 PM<br>Saturday: By appointment<br>Sunday: Closed</p>
-
-          <h3>Follow Us</h3>
-          <p><a href="https://www.stunning-stones.net" target="_blank" rel="noopener">stunning-stones.net</a></p>
         </div>
       </div>
     </div>
@@ -1382,55 +1345,6 @@
       if (e.key === 'ArrowRight') document.querySelector('.lightbox-next').click();
     });
 
-    // Contact form handler
-    async function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const btn = document.getElementById('submitBtn');
-      const status = document.getElementById('formStatus');
-      const data = new FormData(form);
-
-      // Disable button and show loading
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-      status.style.display = 'none';
-
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: data.get('name'),
-            email: data.get('email'),
-            phone: data.get('phone') || '',
-            service: data.get('service') || '',
-            message: data.get('message') || ''
-          })
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          status.style.display = 'block';
-          status.style.background = '#f0fdf4';
-          status.style.color = '#166534';
-          status.style.border = '1px solid #bbf7d0';
-          status.textContent = 'Thank you! Your estimate request has been sent. We\'ll get back to you shortly.';
-          form.reset();
-        } else {
-          throw new Error(result.error || 'Something went wrong');
-        }
-      } catch (err) {
-        status.style.display = 'block';
-        status.style.background = '#fef2f2';
-        status.style.color = '#991b1b';
-        status.style.border = '1px solid #fecaca';
-        status.textContent = 'Sorry, there was an error sending your request. Please call or email us directly.';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Request Free Estimate';
-      }
-    }
 
     // Smooth reveal on scroll
     const observer = new IntersectionObserver((entries) => {
